@@ -61,29 +61,23 @@ function App() {
   };
 
   const handleDelete = (e, id) => {
-    let newTodos = todos.filter((item) => {
-      return item.id !== id;
-    });
-    setTodos(newTodos);
-    saveToLS();
-
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this todo"
     );
     if (confirmDelete) {
-      alert("Todo deleted!");
-    } else {
-      alert("Deletion cancelled.");
-      let newTodos = [...todos];
-      newTodos[index].iscompleted = !newTodos[index].iscompleted;
+      let newTodos = todos.filter((item) => {
+        return item.id !== id;
+      });
       setTodos(newTodos);
+      alert("Todo deleted!");
+      saveToLS();
     }
   };
 
   return (
     <>
       <Navbar />
-      <div className="mx-3 md:container md:mx-auto bg-violet-200 my-5 rounded-xl p-5 min-h-[80vh] md:w-[40%]">
+      <div className="mx-3 md:container md:mx-auto bg-violet-200 my-5 rounded-xl p-5 min-h-[85vh] md:w-[40%]">
         <h1 className="font-bold text-center text-2xl">
           iTask - Manage your todos at one place
         </h1>
