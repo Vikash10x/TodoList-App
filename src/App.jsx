@@ -66,6 +66,18 @@ function App() {
     });
     setTodos(newTodos);
     saveToLS();
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this todo"
+    );
+    if (confirmDelete) {
+      alert("Todo deleted!");
+    } else {
+      alert("Deletion cancelled.");
+      let newTodos = [...todos];
+      newTodos[index].iscompleted = !newTodos[index].iscompleted;
+      setTodos(newTodos);
+    }
   };
 
   return (
@@ -105,7 +117,9 @@ function App() {
           Show Finished
         </label>
         <div className="h-[1px] bg-black opacity-15 w-[90%] mx-auto my-2"></div>
+
         <h2 className="text-xl font-bold">Your todos</h2>
+
         <div className="todos">
           {todos.length == 0 && <div className="m-3">No Todos to display</div>}
           {todos.map((item, index) => {
