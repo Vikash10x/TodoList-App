@@ -71,44 +71,47 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto bg-violet-200 my-5 rounded-xl p-5 min-h-[80vh] w-1/2">
-        <h1 className="font-bold text-center text-xl">
+      <div className="mx-3 md:container md:mx-auto bg-violet-200 my-5 rounded-xl p-5 min-h-[80vh] md:w-[40%]">
+        <h1 className="font-bold text-center text-2xl">
           iTask - Manage your todos at one place
         </h1>
         <div className="addTodo flex flex-col my-5 gap-4">
-          <h2 className="text-lg font-bold">Add a Todo</h2>
-          <input
-            onChange={handleChange}
-            value={todo}
-            type="text"
-            placeholder="Enter your todo"
-            className="w-full px-3 py-1 rounded-lg"
-          />
-          <button
-            onClick={handleAdd}
-            disabled={todo.length < 3}
-            className="bg-violet-800 hover:bg-violet-950 disabled:bg-violet-700 p-2 py-1 text-sm font-bold text-white rounded-md cursor-pointer"
-          >
-            Save
-          </button>
+          <h2 className="text-xl font-bold">Add a Todo</h2>
+          <div className="flex">
+            <input
+              onChange={handleChange}
+              value={todo}
+              type="text"
+              placeholder="Enter your todo"
+              className="w-full px-3 py-1 rounded-lg"
+            />
+            <button
+              onClick={handleAdd}
+              disabled={todo.length < 3}
+              className="bg-violet-800 hover:bg-violet-950 disabled:bg-violet-700 p-4 py-2 text-sm font-bold text-white rounded-md mx-2 cursor-pointer"
+            >
+              Save
+            </button>
+          </div>
         </div>
         <input
           className="my-3 gap-2"
           onChange={toggleFinished}
           type="checkbox"
+          id="show"
           checked={showFinished}
         />
-        Show Finished
-        <h2 className="text-lg font-bold">Your todos</h2>
+        <label className="mx-2" htmlFor="show">
+          Show Finished
+        </label>
+        <div className="h-[1px] bg-black opacity-15 w-[90%] mx-auto my-2"></div>
+        <h2 className="text-xl font-bold">Your todos</h2>
         <div className="todos">
           {todos.length == 0 && <div className="m-3">No Todos to display</div>}
           {todos.map((item, index) => {
             return (
               (showFinished || !item.iscompleted) && (
-                <div
-                  key={index}
-                  className="todo flex w-1/2 my-4 justify-between"
-                >
+                <div key={index} className="todo flex  my-4 justify-between">
                   <div className="flex gap-4">
                     <input
                       name={item.id}
