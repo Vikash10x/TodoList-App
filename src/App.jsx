@@ -7,6 +7,7 @@ import "./App.css";
 function App() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  const [showFinished, setShowFinished] = useState("");
 
   useEffect(() => {
     let todoString = localStorage.getItem("todos");
@@ -18,6 +19,10 @@ function App() {
 
   const saveToLS = (params) => {
     localStorage.setItem("todos", JSON.stringify(todos));
+  };
+
+  const toggleFinished = (e) => {
+    setShowFinished(!showFinished);
   };
 
   const handleChange = (e) => {
@@ -76,47 +81,57 @@ function App() {
           />
           <button
             onClick={handleAdd}
-            className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-6"
+            disabled={todo.length < 3}
+            className="bg-violet-800 hover:bg-violet-950 disabled:bg-violet-700 p-2 py-1 text-sm font-bold text-white rounded-md mx-6"
           >
             Save
           </button>
         </div>
-
+        <input
+          onChange={toggleFinished}
+          type="checkbox"
+          checked={showFinished}
+        />
+        Show Finished
         <h2 className="text-lg font-bold">Your todos</h2>
-
         <div className="todos">
           {todos.length == 0 && <div className="m-3">No Todos to display</div>}
           {todos.map((item, index) => {
             return (
-              <div key={index} className="todo flex w-1/4 my-4 justify-between">
-                <div className="flex gap-4">
-                  <input
-                    name={item.id}
-                    onChange={handleCheckbox}
-                    type="checkbox"
-                    value={item.iscompleted}
-                    id=""
-                  />
-                  <div className={item.iscompleted ? "line-through" : ""}>
-                    {item.todo}
+              (showFinished || !item.iscompleted) && (
+                <div
+                  key={index}
+                  className="todo flex w-1/4 my-4 justify-between"
+                >
+                  <div className="flex gap-4">
+                    <input
+                      name={item.id}
+                      onChange={handleCheckbox}
+                      type="checkbox"
+                      checked={item.iscompleted}
+                      id=""
+                    />
+                    <div className={item.iscompleted ? "line-through" : ""}>
+                      {item.todo}
+                    </div>
+                  </div>
+
+                  <div className="buttons flex h-full">
+                    <button
+                      onClick={(e) => handleEdit(e, item.id)}
+                      className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={(e) => handleDelete(e, item.id)}
+                      className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
-
-                <div className="buttons flex h-full">
-                  <button
-                    onClick={(e) => handleEdit(e, item.id)}
-                    className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={(e) => handleDelete(e, item.id)}
-                    className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+              )
             );
           })}
         </div>
