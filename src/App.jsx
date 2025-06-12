@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navbar } from "./components/navbar";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { parse, v4 as uuidv4 } from "uuid";
 
 import "./App.css";
@@ -69,25 +71,29 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto bg-violet-200 my-5 rounded-xl p-5 min-h-[80vh]">
-        <div>
+      <div className="container mx-auto bg-violet-200 my-5 rounded-xl p-5 min-h-[80vh] w-1/2">
+        <h1 className="font-bold text-center text-xl">
+          iTask - Manage your todos at one place
+        </h1>
+        <div className="addTodo flex flex-col my-5 gap-4">
           <h2 className="text-lg font-bold">Add a Todo</h2>
           <input
             onChange={handleChange}
             value={todo}
             type="text"
             placeholder="Enter your todo"
-            className="w-1/2"
+            className="w-full px-3 py-1 rounded-lg"
           />
           <button
             onClick={handleAdd}
             disabled={todo.length < 3}
-            className="bg-violet-800 hover:bg-violet-950 disabled:bg-violet-700 p-2 py-1 text-sm font-bold text-white rounded-md mx-6"
+            className="bg-violet-800 hover:bg-violet-950 disabled:bg-violet-700 p-2 py-1 text-sm font-bold text-white rounded-md cursor-pointer"
           >
             Save
           </button>
         </div>
         <input
+          className="my-3 gap-2"
           onChange={toggleFinished}
           type="checkbox"
           checked={showFinished}
@@ -101,7 +107,7 @@ function App() {
               (showFinished || !item.iscompleted) && (
                 <div
                   key={index}
-                  className="todo flex w-1/4 my-4 justify-between"
+                  className="todo flex w-1/2 my-4 justify-between"
                 >
                   <div className="flex gap-4">
                     <input
@@ -121,13 +127,13 @@ function App() {
                       onClick={(e) => handleEdit(e, item.id)}
                       className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1"
                     >
-                      Edit
+                      <FaEdit />
                     </button>
                     <button
                       onClick={(e) => handleDelete(e, item.id)}
                       className="bg-violet-800 hover:bg-violet-950 p-2 py-1 text-sm font-bold text-white rounded-md mx-1"
                     >
-                      Delete
+                      <MdDelete />
                     </button>
                   </div>
                 </div>
